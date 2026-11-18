@@ -14,23 +14,17 @@ if (!window.supabase || typeof window.supabase.createClient !== "function") {
 }
 
 // ======================================
-// TAB SESSION
+// PERSISTENT DEVICE SESSION
+// Each phone/browser keeps its own login.
 // ======================================
-
-let modessaTabId = sessionStorage.getItem("modessa_tab_id");
-
-if (!modessaTabId) {
-    modessaTabId = crypto.randomUUID();
-    sessionStorage.setItem("modessa_tab_id", modessaTabId);
-}
 
 const modessaSupabase = window.supabase.createClient(
     MODESSA_SUPABASE_URL,
     MODESSA_SUPABASE_KEY,
     {
         auth: {
-            storage: window.sessionStorage,
-            storageKey: "modessa-auth-" + modessaTabId,
+            storage: window.localStorage,
+            storageKey: "modessa-auth-device-v1",
             persistSession: true,
             autoRefreshToken: true,
             detectSessionInUrl: true
