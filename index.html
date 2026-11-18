@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7e9f2">
+    <title>Modessa | همراه تو</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="modessa-chat-premium.css">
+    <link rel="stylesheet" href="modessa-hesam-mood-display.css">
+    <link rel="stylesheet" href="modessa-mood-premium.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        [hidden] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="auth-screen" id="auth-screen">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <div class="auth-flower">🌸</div>
+            <h1>Modessa</h1>
+            <p>همراه تو، در تمام روزها</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button type="button" id="login-tab" class="auth-tab active">ورود</button>
+            <button type="button" id="register-tab" class="auth-tab">ثبت‌نام</button>
+        </div>
+
+        <form id="auth-form">
+            <div class="auth-field">
+                <label for="auth-email">ایمیل</label>
+                <input type="email" id="auth-email" placeholder="example@email.com" required autocomplete="email">
+            </div>
+
+            <div class="auth-field">
+                <label for="auth-password">رمز عبور</label>
+                <input type="password" id="auth-password" placeholder="رمز عبور" required minlength="6" autocomplete="current-password">
+            </div>
+
+            <div class="auth-field" id="confirm-password-field" hidden>
+                <label for="auth-confirm-password">تکرار رمز عبور</label>
+                <input type="password" id="auth-confirm-password" placeholder="تکرار رمز عبور" minlength="6" autocomplete="new-password">
+            </div>
+
+            <p id="auth-message" class="auth-message"></p>
+            <button type="submit" id="auth-submit" class="auth-submit">ورود به حساب</button>
+        </form>
+
+        <p class="auth-footer">ساخته‌شده با عشق توسط HesamDevLab</p>
+    </div>
+</div>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">H</div>
+            <div class="logo-text">
+                <h2>Hesam<span>DevLab</span></h2>
+                <small>CREATIVE DEVELOPMENT</small>
+            </div>
+        </div>
+
+        <div class="menu-title">منوی اصلی</div>
+
+        <nav>
+            <button class="nav-item active" data-page="dashboard">
+                <span>⌂</span> داشبورد
+            </button>
+
+            <button class="nav-item" data-page="calendar">
+                <span>▦</span> تقویم قاعدگی
+            </button>
+
+            <button class="nav-item" data-page="records">
+                <span>♡</span> تاریخچه
+            </button>
+
+            <button class="nav-item" data-page="symptoms">
+                <span>✿</span> ثبت علائم
+            </button>
+
+            <button class="nav-item" data-page="companion">
+                <span>♧</span> همراه من
+            </button>
+
+            <button class="nav-item" data-page="profile">
+                <span>◉</span> پروفایل
+            </button>
+
+            <button class="nav-item" data-page="companion-dashboard" hidden>
+                <span>♡</span> داشبورد همراه
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-card">
+                <div class="flower">🌷</div>
+                <p>مراقبت از خودت را فراموش نکن.</p>
+                <small>تو شایسته آرامشی.</small>
+            </div>
+            <div class="version">Modessa v1.0</div>
+        </div>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h2 id="page-title">داشبورد</h2>
+                <p id="today-date"></p>
+            </div>
+
+            <div class="user-info">
+                <div class="notification">♡</div>
+                <div class="avatar">م</div>
+                <div>
+                    <strong id="header-name">محدثه</strong>
+                    <small id="header-role">حساب کاربری</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- OWNER DASHBOARD -->
+
+        <section class="page active" id="dashboard">
+
+            <div class="welcome-banner">
+                <div>
+                    <span class="welcome-label">سلام، خوش اومدی 🌸</span>
+                    <h1 id="welcome-name">محدثه عزیز!</h1>
+                    <p>امروز چطوری؟ بیا وضعیت چرخه‌ات رو بررسی کنیم.</p>
+                    <button class="primary-btn" onclick="showPage('symptoms')">ثبت وضعیت امروز</button>
+                </div>
+                <div class="banner-flower">🌺</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card pink">
+                    <div class="stat-icon">♡</div>
+                    <span>روز چرخه</span>
+                    <h2 id="cycle-day">-</h2>
+                    <small>از شروع آخرین پریود</small>
+                </div>
+
+                <div class="stat-card purple">
+                    <div class="stat-icon">▦</div>
+                    <span>تا پریود بعدی</span>
+                    <h2 id="days-left">-</h2>
+                    <small>روز باقی‌مانده تخمینی</small>
+                </div>
+
+                <div class="stat-card peach">
+                    <div class="stat-icon">♡</div>
+                    <span>طول چرخه</span>
+                    <h2 id="cycle-length">۲۸</h2>
+                    <small>روز</small>
+                </div>
+
+                <div class="stat-card green">
+                    <div class="stat-icon">✿</div>
+                    <span>آخرین پریود</span>
+                    <h2 id="last-period">ثبت نشده</h2>
+                    <small>تاریخ شروع</small>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="panel calendar-preview">
+                    <div class="panel-header">
+                        <div>
+                            <h3>تقویم چرخه</h3>
+                            <p>نمای کلی وضعیت ماهانه</p>
+                        </div>
+                        <button class="text-btn" onclick="showPage('calendar')">مشاهده تقویم ←</button>
+                    </div>
+
+                    <div id="mini-calendar" class="mini-calendar"></div>
+
+                    <div class="legend">
+                        <span><i class="period-dot"></i> پریود</span>
+                        <span><i class="today-dot"></i> امروز</span>
+                    </div>
+                </div>
+
+                <div class="panel next-period">
+                    <div class="panel-header">
+                        <h3>پریود بعدی</h3>
+                        <span>🌸</span>
+                    </div>
+
+                    <div class="countdown-circle">
+                        <div>
+                            <strong id="countdown-number">-</strong>
+                            <span>روز</span>
+                        </div>
+                    </div>
+
+                    <p id="next-period-text">برای دریافت پیش‌بینی، تاریخ شروع پریودت رو ثبت کن.</p>
+                    <button class="secondary-btn" onclick="showPage('calendar')">ثبت اطلاعات</button>
+                </div>
+            </div>
+
+            <div class="panel quick-actions">
+                <h3>دسترسی سریع</h3>
+
+                <div class="action-grid">
+                    <button onclick="showPage('calendar')"><span>📅</span><strong>ثبت پریود</strong></button>
+                    <button onclick="showPage('symptoms')"><span>💗</span><strong>ثبت علائم</strong></button>
+                    <button onclick="showPage('records')"><span>📖</span><strong>تاریخچه</strong></button>
+                    <button onclick="showPage('companion')"><span>💌</span><strong>همراه من</strong></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALENDAR -->
+
+        <section class="page" id="calendar">
+            <div class="section-heading">
+                <div>
+                    <h2>تقویم قاعدگی</h2>
+                    <p>چرخه خودت رو ثبت و بررسی کن.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="calendar-controls">
+                    <button onclick="changeMonth(-1)">❯</button>
+                    <h3 id="calendar-month"></h3>
+                    <button onclick="changeMonth(1)">❮</button>
+                </div>
+
+                <div class="full-calendar" id="full-calendar"></div>
+
+                <div class="legend">
+                    <span><i class="period-dot"></i> روزهای پریود</span>
+                    <span><i class="today-dot"></i> امروز</span>
+                    <span><i class="future-dot"></i> پیش‌بینی</span>
+                </div>
+            </div>
+
+            <div class="panel form-panel">
+                <h3>ثبت دوره جدید</h3>
+                <p>تاریخ شروع و پایان پریودت رو وارد کن.</p>
+
+                <form id="period-form">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>تاریخ شروع</label>
+                            <input type="date" id="period-start" required>
+                        </div>
+                        <div class="input-group">
+                            <label>تاریخ پایان</label>
+                            <input type="date" id="period-end" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-btn">ثبت دوره</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- RECORDS -->
+
+        <section class="page" id="records">
+            <div class="section-heading">
+                <div>
+                    <h2>تاریخچه چرخه‌ها</h2>
+                    <p>تمام دوره‌های ثبت‌شده تو.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>دوره‌های قبلی</h3>
+                    <span>📖</span>
+                </div>
+                <div id="records-list"></div>
+            </div>
+        </section>
+
+        <!-- SYMPTOMS -->
+
+        <section class="page" id="symptoms">
+            <div class="section-heading">
+                <div>
+                    <h2>ثبت وضعیت امروز</h2>
+                    <p>احساس و علائم امروزت رو ثبت کن.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <form id="symptom-form">
+
+                    <div class="input-group">
+                        <label>امروز چه حسی داری؟</label>
+
+                        <div class="mood-grid">
+                            <label class="mood-option">
+                                <input type="radio" name="mood" value="خوب" required>
+                                <span>😊</span><small>خوب</small>
+                            </label>
+                            <label class="mood-option">
+                                <input type="radio" name="mood" value="عادی">
+                                <span>😐</span><small>عادی</small>
+                            </label>
+                            <label class="mood-option">
+                                <input type="radio" name="mood" value="غمگین">
+                                <span>😔</span><small>غمگین</small>
+                            </label>
+                            <label class="mood-option">
+                                <input type="radio" name="mood" value="خسته">
+                                <span>😴</span><small>خسته</small>
+                            </label>
+                            <label class="mood-option">
+                                <input type="radio" name="mood" value="عصبی">
+                                <span>😣</span><small>عصبی</small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>چه علائمی داری؟</label>
+                        <div class="symptom-grid">
+                            <label><input type="checkbox" value="دل‌درد"> دل‌درد</label>
+                            <label><input type="checkbox" value="کمردرد"> کمردرد</label>
+                            <label><input type="checkbox" value="سردرد"> سردرد</label>
+                            <label><input type="checkbox" value="نفخ"> نفخ</label>
+                            <label><input type="checkbox" value="خستگی"> خستگی</label>
+                            <label><input type="checkbox" value="حساسیت سینه"> حساسیت سینه</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>توضیحات بیشتر</label>
+                        <textarea id="symptom-note" placeholder="امروز چه احساسی داری؟"></textarea>
+                    </div>
+
+                    <button type="submit" class="primary-btn">ذخیره وضعیت</button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h3>آخرین وضعیت‌های ثبت‌شده</h3>
+                <div id="symptom-history"></div>
+            </div>
+        </section>
+
+        <!-- OWNER COMPANION SETTINGS -->
+
+        <section class="page" id="companion">
+
+            <div class="section-heading">
+                <div>
+                    <h2>همراه من ❤️</h2>
+                    <p>مدیریت اتصال و انتخاب اطلاعات قابل اشتراک‌گذاری.</p>
+                </div>
+            </div>
+
+            <div class="companion-banner">
+                <span>💌</span>
+                <h2>تنها نیستی!</h2>
+                <p>با اتصال همراهت، می‌تونه در روزهای مختلف چرخه کنارت باشه.</p>
+            </div>
+
+            <div class="panel">
+                <h3>اتصال همراه</h3>
+                <p>یک کد اختصاصی بساز تا همراهت بتونه درخواست اتصال بده.</p>
+
+                <div class="connection-code">
+                    <strong id="connection-code">------</strong>
+                    <button class="secondary-btn" onclick="generateCode()">ساخت کد جدید</button>
+                    <button class="text-btn" onclick="copyCode()">کپی کد</button>
+                </div>
+
+                <div class="input-group">
+                    <label for="companion-code-input">کد دعوت همراهت</label>
+                    <input type="text" id="companion-code-input" placeholder="کد ۱۲ کاراکتری را وارد کن" maxlength="12" autocomplete="off">
+                    <button type="button" class="primary-btn" onclick="redeemCompanionCode()">اتصال به همراه</button>
+                </div>
+
+                <p id="companion-status" class="muted">وضعیت اتصال در این قسمت نمایش داده می‌شود.</p>
+
+                <div class="notice">
+                    🔒 اطلاعات چرخه و علائم فقط با اجازه و انتخاب خودت قابل اشتراک‌گذاری خواهند بود.
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>چه چیزهایی به همراه اطلاع داده شود؟</h3>
+
+                <div class="setting-row">
+                    <span>اعلان شروع پریود</span>
+                    <input type="checkbox" id="notify-start" checked>
+                </div>
+
+                <div class="setting-row">
+                    <span>اعلان نزدیک شدن پریود</span>
+                    <input type="checkbox" id="notify-near" checked>
+                </div>
+
+                <div class="setting-row">
+                    <span>اشتراک‌گذاری علائم</span>
+                    <input type="checkbox" id="share-symptoms">
+                </div>
+
+                <button class="primary-btn" onclick="saveSettings()">ذخیره تنظیمات</button>
+                <button class="secondary-btn" onclick="disconnectCompanion()">قطع اتصال همراه</button>
+            </div>
+
+            <div class="panel">
+                <h3>پیام‌های همراه</h3>
+                <div id="companion-messages-owner"></div>
+
+                <div class="input-group">
+                    <label for="companion-message-input-owner">ارسال پیام</label>
+                    <textarea id="companion-message-input-owner" maxlength="2000" placeholder="پیامت رو بنویس..."></textarea>
+                    <button class="primary-btn" onclick="sendCompanionMessage()">ارسال پیام</button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- COMPANION DASHBOARD -->
+
+        <section class="page" id="companion-dashboard" hidden>
+
+            <div class="welcome-banner">
+                <div>
+                    <span class="welcome-label">سلام، خوش اومدی 🌸</span>
+                    <h1>داشبورد همراه</h1>
+                    <p>اینجا فقط اطلاعاتی رو می‌بینی که صاحب حساب باهات به اشتراک گذاشته.</p>
+                </div>
+                <div class="banner-flower">💗</div>
+            </div>
+
+           <div class="panel connection-panel">
+    <div class="connection-top">
+        <div class="connection-icon">♡</div>
+        <div>
+            <h3>وضعیت ارتباط شما</h3>
+            <p>وضعیت اتصال به حساب محدثه</p>
+        </div>
+        <span class="connection-indicator"></span>
+    </div>
+
+    <p id="companion-dashboard-status" class="connection-status">
+        در حال بررسی اتصال...
+    </p>
+</div>
+            <div class="panel">
+                <h3>اطلاعات اشتراک‌گذاری‌شده</h3>
+                <div id="companion-shared-updates">
+                    <p class="muted">در انتظار دریافت اطلاعات...</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>پیام‌ها</h3>
+                <div id="companion-messages-companion"></div>
+
+                <div class="input-group">
+                    <label for="companion-message-input-companion">ارسال پیام به همراه</label>
+                    <textarea id="companion-message-input-companion" maxlength="2000" placeholder="پیامت رو بنویس..."></textarea>
+                    <button class="primary-btn" onclick="sendCompanionMessage()">ارسال پیام</button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- PROFILE -->
+
+        <section class="page" id="profile">
+            <div class="section-heading">
+                <div>
+                    <h2>پروفایل من</h2>
+                    <p>اطلاعات حساب کاربری.</p>
+                </div>
+            </div>
+
+            <div class="panel profile-panel">
+                <div class="profile-avatar">م</div>
+                <h2 id="profile-display-name">محدثه</h2>
+                <p>عضو Modessa</p>
+
+                <form id="profile-form">
+                    <div class="input-group">
+                        <label>نام</label>
+                        <input type="text" id="profile-name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>میانگین طول چرخه (روز)</label>
+                        <input type="number" id="profile-cycle" min="15" max="60" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>میانگین طول پریود (روز)</label>
+                        <input type="number" id="profile-duration" min="1" max="10" required>
+                    </div>
+
+                    <button type="submit" class="primary-btn">ذخیره تغییرات</button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <p>Modessa © 2026 | ساخته شده برای مراقبت بیشتر از خودت 🌸</p>
+        </footer>
+
+    </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

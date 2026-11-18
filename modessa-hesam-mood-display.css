@@ -1,0 +1,189 @@
+/* =========================================
+   MODESSA — HESAM MOOD DISPLAY PREMIUM
+   Styles the mood updates shown on Hesam's dashboard.
+   Load this file AFTER style.css and other Modessa CSS files.
+   ========================================= */
+
+#companion-dashboard #companion-shared-updates {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+    align-items: stretch;
+}
+
+#companion-dashboard #companion-shared-updates > .symptom-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    margin: 0;
+    padding: 20px;
+    overflow: hidden;
+    border: 1px solid #f0dfeb;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(224, 142, 190, .15), transparent 42%),
+        linear-gradient(145deg, #ffffff 0%, #fff9fc 58%, #f9f6ff 100%);
+    box-shadow: 0 9px 26px rgba(91, 61, 91, .065);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+#companion-dashboard #companion-shared-updates > .symptom-item::before {
+    content: "♡";
+    position: absolute;
+    top: 10px;
+    left: 16px;
+    color: rgba(205, 119, 166, .18);
+    font-size: 42px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+#companion-dashboard #companion-shared-updates > .symptom-item:hover {
+    transform: translateY(-3px);
+    border-color: #e4bfd5;
+    box-shadow: 0 14px 32px rgba(145, 91, 133, .11);
+}
+
+#companion-dashboard #companion-shared-updates > .symptom-item strong {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    max-width: calc(100% - 35px);
+    padding: 8px 13px;
+    border: 1px solid #f1dce9;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .86);
+    color: #8f5578;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+#companion-dashboard #companion-shared-updates > .symptom-item strong::before {
+    content: "📅";
+    font-size: 14px;
+}
+
+#companion-dashboard #companion-shared-updates > .symptom-item p {
+    position: relative;
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid rgba(235, 222, 237, .9);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, .78);
+    color: #5d5062;
+    font-size: 13px;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+}
+
+#companion-dashboard #companion-shared-updates > .symptom-item p:first-of-type {
+    border-color: #efd9e8;
+    background: linear-gradient(100deg, #fff1f8, #f8f3ff);
+    color: #8c4f77;
+    font-weight: 800;
+}
+
+#companion-dashboard #companion-shared-updates > .symptom-item p:first-of-type::before {
+    content: "حال روحی";
+    display: block;
+    margin-bottom: 4px;
+    color: #a38b9f;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+#companion-dashboard #companion-shared-updates > .symptom-item p:last-of-type {
+    color: #766b7b;
+}
+
+#companion-dashboard #companion-shared-updates:empty::after {
+    content: "هنوز وضعیتی به اشتراک گذاشته نشده است.";
+    display: block;
+    grid-column: 1 / -1;
+    padding: 24px 18px;
+    border: 1px dashed #e8d8e8;
+    border-radius: 18px;
+    background: #fffafd;
+    color: #95899a;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* Friendly empty / loading message rendered as a paragraph */
+#companion-dashboard #companion-shared-updates > p.muted,
+#companion-dashboard #companion-shared-updates > p:not(.symptom-item p) {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 22px 18px;
+    border: 1px dashed #e8d8e8;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #fffafd, #faf7ff);
+    color: #95899a;
+    text-align: center;
+    line-height: 1.9;
+}
+
+/* Owner's own mood history gets the same visual language */
+#symptoms #symptom-history > .symptom-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin: 0 0 12px;
+    padding: 17px 18px;
+    border: 1px solid #f0dfeb;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #fff 0%, #fff8fc 100%);
+    box-shadow: 0 6px 18px rgba(91, 61, 91, .045);
+}
+
+#symptoms #symptom-history > .symptom-item strong {
+    color: #8f5578;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+#symptoms #symptom-history > .symptom-item span {
+    color: #6e6272;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+#symptoms #symptom-history > .symptom-item small {
+    color: #a195a4;
+    font-size: 11px;
+}
+
+#symptoms #symptom-history > .symptom-item p {
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: 13px;
+    background: #faf5fb;
+    color: #766b7b;
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+@media (max-width: 700px) {
+    #companion-dashboard #companion-shared-updates {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    #companion-dashboard #companion-shared-updates > .symptom-item {
+        padding: 17px;
+        border-radius: 19px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #companion-dashboard #companion-shared-updates > .symptom-item {
+        transition: none;
+    }
+}

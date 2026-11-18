@@ -1,0 +1,259 @@
+/* =========================================
+   MODESSA — MOOD & WELLBEING PREMIUM
+   Add this file after style.css and the chat CSS.
+   ========================================= */
+
+:root {
+    --mood-ink: #493b50;
+    --mood-muted: #95899a;
+    --mood-pink: #d978a9;
+    --mood-purple: #9580ca;
+    --mood-border: #f0e6ef;
+}
+
+/* Mood selection area */
+#symptoms .mood-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 13px;
+    margin-top: 14px;
+}
+
+#symptoms .mood-option {
+    position: relative;
+    display: flex;
+    min-height: 116px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 15px 8px;
+    border: 1px solid var(--mood-border);
+    border-radius: 20px;
+    background: linear-gradient(155deg, #fff 0%, #fff9fc 100%);
+    cursor: pointer;
+    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease;
+    overflow: hidden;
+}
+
+#symptoms .mood-option::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(224, 132, 181, .13), transparent 68%);
+    opacity: 0;
+    transition: opacity .22s ease;
+    pointer-events: none;
+}
+
+#symptoms .mood-option:hover {
+    transform: translateY(-3px);
+    border-color: #e6b5d0;
+    box-shadow: 0 10px 24px rgba(160, 105, 145, .10);
+}
+
+#symptoms .mood-option:hover::before {
+    opacity: 1;
+}
+
+#symptoms .mood-option input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#symptoms .mood-option span {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 53px;
+    height: 53px;
+    place-items: center;
+    border-radius: 17px;
+    background: #fff0f7;
+    font-size: 29px;
+    line-height: 1;
+    transition: transform .22s ease, background .22s ease;
+}
+
+#symptoms .mood-option small {
+    position: relative;
+    z-index: 1;
+    color: var(--mood-ink);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+#symptoms .mood-option:has(input:checked) {
+    border-color: #d978a9;
+    background: linear-gradient(145deg, #fff5fa 0%, #f8f3ff 100%);
+    box-shadow: 0 8px 22px rgba(195, 111, 159, .16), inset 0 0 0 1px rgba(217, 120, 169, .14);
+    transform: translateY(-2px);
+}
+
+#symptoms .mood-option:has(input:checked)::before {
+    opacity: 1;
+}
+
+#symptoms .mood-option:has(input:checked) span {
+    background: #f8ddeb;
+    transform: scale(1.08);
+}
+
+#symptoms .mood-option:has(input:focus-visible) {
+    outline: 3px solid rgba(149, 128, 202, .35);
+    outline-offset: 3px;
+}
+
+/* Symptom choices */
+#symptoms .symptom-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 13px;
+}
+
+#symptoms .symptom-grid label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 10px 13px;
+    border: 1px solid var(--mood-border);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--mood-ink);
+    font-size: 13px;
+    transition: .2s ease;
+    cursor: pointer;
+}
+
+#symptoms .symptom-grid label:has(input:checked) {
+    border-color: #dba5c5;
+    background: #fff4f9;
+    color: #a84f80;
+}
+
+#symptoms .symptom-grid input {
+    accent-color: var(--mood-pink);
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+}
+
+/* Notes field */
+#symptoms #symptom-note {
+    min-height: 112px;
+    line-height: 1.9;
+    border-radius: 16px;
+}
+
+/* Recent mood / symptom history */
+#symptom-history {
+    display: grid;
+    gap: 12px;
+    margin-top: 17px;
+}
+
+#symptom-history:empty::before {
+    content: "هنوز وضعیتی ثبت نشده است.";
+    display: block;
+    padding: 22px;
+    border: 1px dashed #e8d9e7;
+    border-radius: 16px;
+    background: #fffafd;
+    color: var(--mood-muted);
+    text-align: center;
+    font-size: 13px;
+}
+
+/* Common history item patterns used by the app */
+#symptom-history > *,
+#companion-shared-updates > * {
+    border-radius: 17px;
+}
+
+#symptom-history .symptom-item,
+#symptom-history .record-item,
+#companion-shared-updates .symptom-item,
+#companion-shared-updates .record-item {
+    padding: 17px 18px;
+    border: 1px solid var(--mood-border);
+    background: linear-gradient(145deg, #fff 0%, #fff9fc 100%);
+    box-shadow: 0 5px 18px rgba(91, 61, 91, .045);
+}
+
+/* Shared mood/update cards on companion dashboard */
+#companion-shared-updates {
+    display: grid;
+    gap: 12px;
+}
+
+#companion-shared-updates .mood,
+#companion-shared-updates [class*="mood"] {
+    color: var(--mood-ink);
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+    #symptoms .mood-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    #symptoms .mood-option {
+        min-height: 105px;
+        border-radius: 16px;
+    }
+
+    #symptoms .mood-option span {
+        width: 47px;
+        height: 47px;
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 600px) {
+    #symptoms .mood-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    #symptoms .mood-option {
+        min-height: 100px;
+        padding: 12px 6px;
+    }
+
+    #symptoms .mood-option span {
+        width: 45px;
+        height: 45px;
+        border-radius: 14px;
+        font-size: 25px;
+    }
+
+    #symptoms .mood-option small {
+        font-size: 12px;
+    }
+
+    #symptoms .symptom-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    #symptoms .symptom-grid label {
+        min-height: 45px;
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #symptoms .mood-option,
+    #symptoms .mood-option span,
+    #symptoms .mood-option::before {
+        transition: none;
+    }
+}
